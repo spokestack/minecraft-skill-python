@@ -1,0 +1,17 @@
+#
+# requirements.in - explicit python dependencies
+#
+# to update requirements.txt, run:
+#
+#    pip-compile
+#
+
+pip-tools
+spokestack
+black
+isort
+flake8
+webrtcvad
+pyaudio
+websocket-client
+requests

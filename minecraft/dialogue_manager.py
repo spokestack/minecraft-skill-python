@@ -17,6 +17,7 @@ class DialogueManager:
 
     def __init__(self, threshold=0.5) -> None:
         self._recipes = recipes.DB
+        self._names = list(self._recipes.keys())
         self._threshold = threshold
 
     def __call__(self, results):
@@ -39,8 +40,9 @@ class DialogueManager:
                     if slot["name"] == "Item":
 
                         matched, score = process.extractOne(
-                            slot["raw_value"], list(self._recipes.keys())
+                            slot["raw_value"], self._names
                         )
+
                         if score > self._threshold:
                             recipe = self._recipes.get(matched)
                             return recipe

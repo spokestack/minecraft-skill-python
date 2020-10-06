@@ -16,8 +16,8 @@ class Response(Enum):
         "you can say exit. Now, what can I help you with?"
     )
     RECIPE_NOT_FOUND_WITH_ITEM_NAME = (
-        "I'm sorry, I currently do not know the recipe " "for {}."
+        "I'm sorry, I currently do not know the recipe for {}."
     )
     RECIPE_NOT_FOUND_WITHOUT_ITEM_NAME = (
-        "I'm sorry, I currently do not know that " "recipe."
+        "I'm sorry, I currently do not know that recipe."
     )

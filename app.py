@@ -13,8 +13,6 @@ from minecraft.responses import Response
 
 
 def main():
-    asr_url = "wss://api.spokestack.io"
-    tts_url = "https://api.spokestack.io/v1"
     key_id = "your_spokestack_key"
     key_secret = "your_spokestack_secret_key"
 
@@ -23,7 +21,7 @@ def main():
         [
             VoiceActivityDetector(),
             WakewordTrigger(pre_emphasis=0.97, model_dir="tflite"),
-            CloudSpeechRecognizer(asr_url, key_id, key_secret),
+            CloudSpeechRecognizer(key_id, key_secret),
             ActivationTimeout(),
         ],
     )
@@ -31,7 +29,7 @@ def main():
     nlu = TFLiteNLU("tflite")
     dialogue_manager = DialogueManager()
     manager = TextToSpeechManager(
-        TextToSpeechClient(key_id, key_secret, tts_url), PyAudioOutput(),
+        TextToSpeechClient(key_id, key_secret), PyAudioOutput(),
     )
 
     @pipeline.event

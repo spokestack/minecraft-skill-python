@@ -8,20 +8,18 @@ from spokestack.tts.manager import TextToSpeechManager
 from spokestack.vad.webrtc import VoiceActivityDetector
 from spokestack.wakeword.tflite import WakewordTrigger
 
+from config import KEY_ID, KEY_SECRET
 from minecraft.dialogue_manager import DialogueManager
 from minecraft.responses import Response
 
 
 def main():
-    key_id = "your_spokestack_key"
-    key_secret = "your_spokestack_secret_key"
-
     pipeline = SpeechPipeline(
         PyAudioInput(frame_width=20, sample_rate=16000, exception_on_overflow=False),
         [
             VoiceActivityDetector(),
             WakewordTrigger(pre_emphasis=0.97, model_dir="tflite"),
-            CloudSpeechRecognizer(key_id, key_secret),
+            CloudSpeechRecognizer(spokestack_id=KEY_ID, spokestack_secret=KEY_SECRET),
             ActivationTimeout(),
         ],
     )
@@ -29,7 +27,7 @@ def main():
     nlu = TFLiteNLU("tflite")
     dialogue_manager = DialogueManager()
     manager = TextToSpeechManager(
-        TextToSpeechClient(key_id, key_secret), PyAudioOutput(),
+        TextToSpeechClient(KEY_ID, KEY_SECRET), PyAudioOutput(),
     )
 
     @pipeline.event

@@ -21,3 +21,4 @@ class Response(Enum):
     RECIPE_NOT_FOUND_WITHOUT_ITEM_NAME = (
         "I'm sorry, I currently do not know that recipe."
     )
+    STOP = "Goodbye!"

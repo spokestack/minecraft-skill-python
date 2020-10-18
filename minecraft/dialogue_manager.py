@@ -19,6 +19,7 @@ class DialogueManager:
         self._recipes = recipes.DB
         self._names = list(self._recipes.keys())
         self._threshold = threshold
+        self._response = Response
 
     def __call__(self, results):
         """ Maps nlu result to a dialogue response.
@@ -32,31 +33,41 @@ class DialogueManager:
 
         intent = results["intent"]
         if intent == "RecipeIntent":
-            slots = results.get("slots")
-
-            if slots:
-                for key in slots:
-                    slot = slots[key]
-                    if slot["name"] == "Item":
-
-                        matched, score = process.extractOne(
-                            slot["raw_value"], self._names
-                        )
-
-                        if score > self._threshold:
-                            recipe = self._recipes.get(matched)
-                            return recipe
-                        return Response.RECIPE_NOT_FOUND_WITH_ITEM_NAME.format(
-                            slot["raw_value"]
-                        )
-            else:
-                return Response.RECIPE_NOT_FOUND_WITHOUT_ITEM_NAME.value
-
+            return self._recipe(results)
         elif intent == "AMAZON.HelpIntent":
-            return Response.HELP_MESSAGE.value
-
+            return self._help()
         elif intent == "AMAZON.StopIntent":
-            return "Goodbye!"
-
+            return self._stop()
         else:
-            return Response.ERROR.value
+            return self._error()
+
+    def _recipe(self, results):
+        slots = results.get("slots")
+        if slots:
+            for key in slots:
+                slot = slots[key]
+                if slot["name"] == "Item":
+                    return self._fuzzy_lookup(slot["raw_value"])
+                return self._not_found(slot["raw_value"])
+        else:
+            return self._response.RECIPE_NOT_FOUND_WITHOUT_ITEM_NAME.value
+
+    def _help(self):
+        return self._response.HELP_MESSAGE.value
+
+    def _stop(self):
+        return self._response.STOP.value
+
+    def _error(self):
+        return self._response.ERROR.value
+
+    def _fuzzy_lookup(self, raw_value):
+        matched, score = process.extractOne(raw_value, self._names)
+
+        if score > self._threshold:
+            recipe = self._recipes.get(matched)
+            return recipe
+        return raw_value
+
+    def _not_found(self, raw_value):
+        return self._response.RECIPE_NOT_FOUND_WITH_ITEM_NAME.format(raw_value)

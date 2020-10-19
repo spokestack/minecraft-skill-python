@@ -43,7 +43,7 @@ def main():
             manager.synthesize(response, "text", "demo-male")
         pipeline.resume()
 
-        if results["intent"] == "AMAZON.StopIntent":
+        if results.intent == "AMAZON.StopIntent":
             pipeline.stop()
 
     manager.synthesize(Response.WELCOME.value, "text", "demo-male")

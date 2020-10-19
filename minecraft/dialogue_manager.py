@@ -25,13 +25,13 @@ class DialogueManager:
         """ Maps nlu result to a dialogue response.
 
         Args:
-            results (dict): classification results from nlu
+            results (Result): classification results from nlu
 
         Returns: a string response to be synthesized by tts
 
         """
 
-        intent = results["intent"]
+        intent = results.intent
         if intent == "RecipeIntent":
             return self._recipe(results)
         elif intent == "AMAZON.HelpIntent":
@@ -42,7 +42,7 @@ class DialogueManager:
             return self._error()
 
     def _recipe(self, results):
-        slots = results.get("slots")
+        slots = results.slots
         if slots:
             for key in slots:
                 slot = slots[key]

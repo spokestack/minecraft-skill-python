@@ -1,4 +1,5 @@
-# Python Minecraft Skill
+<a href="https://www.spokestack.io/blog/porting-the-alexa-minecraft-skill-to-python-using-spokestack" title="Porting the Alexa Minecraft Skill to Python using Spokestack">![Minecraft Skill Python](./images/minecraft-skill-python.png)</a>
+
 This repository is a Python port of Amazon's [Minecraft Helper NodeJS skill](https://github.com/alexa/skill-sample-nodejs-howto). It uses [Spokestack](https://spokestack.io) to replace Amazon's voice services.
 
 ## Setup

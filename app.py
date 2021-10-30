@@ -1,5 +1,5 @@
 from spokestack.activation_timeout import ActivationTimeout
-from spokestack.asr.speech_recognizer import CloudSpeechRecognizer
+from spokestack.asr.spokestack.speech_recognizer import CloudSpeechRecognizer
 from spokestack.io.pyaudio import PyAudioInput, PyAudioOutput
 from spokestack.nlu.tflite import TFLiteNLU
 from spokestack.pipeline import SpeechPipeline

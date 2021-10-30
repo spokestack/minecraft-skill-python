@@ -14,5 +14,8 @@ isort
 flake8
 webrtcvad
 pyaudio
-websocket-client
+websocket
 requests
+tokenizers
+streamp3
+fuzzywuzzy
